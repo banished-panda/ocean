@@ -198,6 +198,11 @@ uint32_t display_getDeltaTime()
     return deltaTime;
 }
 
+uint32_t display_getTime()
+{
+    return SDL_GetTicks();
+}
+
 uint8_t *display_getPixelBuffer()
 {
     return pixels;

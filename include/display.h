@@ -38,6 +38,11 @@ uint8_t * display_getPixelBuffer();
 uint32_t display_getDeltaTime();
 
 /*
+    returns time in miliseconds since window creation
+*/
+uint32_t display_getTime();
+
+/*
     draws the pixelBuffer onto the screen
 */
 void display_update();

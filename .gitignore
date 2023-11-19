@@ -50,3 +50,12 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# vendors
+SDL2/
+
+# build script - TODO: add build script to version control
+build.bat
+
+# doesn't seem useful
+.vscode/

@@ -23,6 +23,15 @@ typedef struct{
     uint8_t A;
 } Color;
 
+// A point in screen space
+typedef struct
+{
+    int x;
+    int y;
+} Point2D;
+
 void render_setContext(RenderContext context);
 
 void render_clear(Color color);
+
+void render_pixel(Point2D point, Color color);

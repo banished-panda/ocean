@@ -1,4 +1,5 @@
 #include "render.h"
+#include "math.h"
 
 static RenderContext context;
 
@@ -28,4 +29,53 @@ void render_pixel(Point2D point, Color color)
     context.buffer[i + context.GREEN_OFFSET] = color.G;
     context.buffer[i + context.BLUE_OFFSET ] = color.B;
     context.buffer[i + context.ALPHA_OFFSET] = color.A;
+}
+
+void render_line(Point2D A, Point2D B, Color color)
+{
+    Point2D UPPER, LOWER;
+    if(A.y < B.y)
+        UPPER = A, LOWER = B;
+    else
+        UPPER = B, LOWER = A;
+
+    int delY = LOWER.y - UPPER.y;
+    int delX = LOWER.x - UPPER.x;
+    int dx = delX > 0 ? 1 : -1;
+
+    if(UPPER.x == LOWER.x){
+        // Vertical line
+        for(int i = UPPER.y; i <= LOWER.y; i++)
+            render_pixel((Point2D){UPPER.x,i}, color);
+        return;
+    }
+
+    if(UPPER.y == LOWER.x){
+        //Horizontal line
+        for(int i = UPPER.x; i <= LOWER.x; i+=dx)
+            render_pixel((Point2D){i, UPPER.y}, color);
+        return;
+    }
+
+    if(abs(delX) <= delY){
+        float dx_dy = ( (float)delX ) / delY;
+        for(int i = 0; i <= delY; i++){
+            int X = UPPER.x + dx_dy * i;
+            render_pixel((Point2D){X,i+UPPER.y}, color);
+        }
+    }
+    else{
+        float dy_dx = ( (float)delY ) / delX;
+        for(int i = 0; abs(i) <= abs(delX); i+=dx){
+            int Y = UPPER.y + dy_dx * i;
+            render_pixel((Point2D){i+UPPER.x, Y}, color);
+        }
+    }
+}
+
+void render_triangleMesh(Point2D A, Point2D B, Point2D C, Color color)
+{
+    render_line(A, B, color);
+    render_line(B, C, color);
+    render_line(C, A, color);
 }

@@ -35,3 +35,7 @@ void render_setContext(RenderContext context);
 void render_clear(Color color);
 
 void render_pixel(Point2D point, Color color);
+
+void render_line(Point2D A, Point2D B, Color color);
+
+void render_triangleMesh(Point2D A, Point2D B, Point2D C, Color color);

@@ -1,11 +1,24 @@
 #include "render.h"
 #include "math.h"
+#include "stdio.h"
 
 static RenderContext context;
+static float half_hFOV, half_vFOV;
+static int HALF_WIDTH, HALF_HEIGHT;
 
 void render_setContext(RenderContext ctx)
 {
     context = ctx;
+}
+
+void render_setHoizontalFOV(float degree)
+{
+    half_hFOV = degree / 2;
+    HALF_HEIGHT = context.HEIGHT / 2;
+    HALF_WIDTH = context.WIDTH / 2;
+    half_vFOV = atan((HALF_WIDTH * tan((3.14159 / 180) * (degree / 2))) / HALF_HEIGHT) / 2;
+    half_vFOV = 180 * half_vFOV / 3.14159;
+    printf("%f %f %f \n", half_hFOV, half_vFOV, tan((3.14159 / 180) * (degree / 2)));
 }
 
 void render_clear(Color color)
@@ -73,9 +86,23 @@ void render_line(Point2D A, Point2D B, Color color)
     }
 }
 
-void render_triangleMesh(Point2D A, Point2D B, Point2D C, Color color)
+void render_triangleMesh_points(Point2D A, Point2D B, Point2D C, Color color)
 {
     render_line(A, B, color);
     render_line(B, C, color);
     render_line(C, A, color);
+}
+
+void render_triangleMesh(Vertex A, Vertex B, Vertex C, Color color)
+{
+
+    Point2D A_screen, B_screen, C_screen;
+    A_screen.x =   (A.pos.x * HALF_WIDTH)  / (A.pos.z * tan((3.14 / 180)*half_hFOV)) + HALF_WIDTH;
+    A_screen.y = - (A.pos.y * HALF_HEIGHT) / (A.pos.z * tan((3.14 / 180)*half_vFOV)) + HALF_HEIGHT;
+    B_screen.x =   (B.pos.x * HALF_WIDTH)  / (B.pos.z * tan((3.14 / 180)*half_hFOV)) + HALF_WIDTH;
+    B_screen.y = - (B.pos.y * HALF_HEIGHT) / (B.pos.z * tan((3.14 / 180)*half_vFOV)) + HALF_HEIGHT;
+    C_screen.x =   (C.pos.x * HALF_WIDTH)  / (C.pos.z * tan((3.14 / 180)*half_hFOV)) + HALF_WIDTH;
+    C_screen.y = - (C.pos.y * HALF_HEIGHT) / (C.pos.z * tan((3.14 / 180)*half_vFOV)) + HALF_HEIGHT;
+
+    render_triangleMesh_points(A_screen, B_screen, C_screen, color);
 }

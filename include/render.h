@@ -30,7 +30,21 @@ typedef struct
     int y;
 } Point2D;
 
+typedef struct
+{
+    float x;
+    float y;
+    float z;  
+} Vec3;
+
+typedef struct
+{
+    Vec3 pos;
+} Vertex;
+
 void render_setContext(RenderContext context);
+
+void render_setHoizontalFOV(float degree);
 
 void render_clear(Color color);
 
@@ -38,4 +52,5 @@ void render_pixel(Point2D point, Color color);
 
 void render_line(Point2D A, Point2D B, Color color);
 
-void render_triangleMesh(Point2D A, Point2D B, Point2D C, Color color);
+void render_triangleMesh_points(Point2D A, Point2D B, Point2D C, Color color);
+void render_triangleMesh(Vertex A, Vertex B, Vertex C, Color color);

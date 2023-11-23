@@ -59,3 +59,4 @@ build.bat
 
 # doesn't seem useful
 .vscode/
+debug/

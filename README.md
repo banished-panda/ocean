@@ -1,4 +1,4 @@
 # ocean
 software rendered
 
-https://raw.githubusercontent.com/banished-panda/ocean/main/demo/Mesh1.mp4
+https://github.com/banished-panda/ocean/assets/120292378/d5868b7f-74d8-4c59-bf31-2fbc145c0897
